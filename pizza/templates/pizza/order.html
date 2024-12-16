@@ -1,24 +1,38 @@
-<h1>
-    Order a pizza
-</h1>
-<h2>{{note}}</h2>
-{% if current_form_pk %}
-<a href="{% url 'edit_order' current_form_pk %}">Edit Order</a>
-{% endif %}
-<!-- <form enctype="multipart/form-data" action="{% url 'order' %}" method="post"> -->
-<form  action="{% url 'order' %}" method="post">
-    {%  csrf_token  %}
-    {{  pizzaform.as_p }}
-    <input type="submit" value="Order pizza">
+{% extends 'pizza/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="container">
+    <h1>
+        Order a pizza
+    </h1>
+    <h2>{{note}}</h2>
+    {% if current_form_pk %}
+    <a href="{% url 'edit_order' current_form_pk %}">Edit Order</a>
+    {% endif %}
 
-</form>
+    <form action="{% url 'order' %}" method="post">
+        {% csrf_token %}
 
-<br>
-<br>
+        {% for field in pizzaform %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {{ field|add_class:"form-control" }}
+            <br>
+        </div>
+        {% endfor %}
 
-Want more pizzas:
-<form action="{% url 'pizzas' %}" method="get">
-    {{ multiple_form.as_p }}
-    <input type="submit" value="Get Pizzas">
-</form>
+        <input type="submit" value="Order pizza">
 
+    </form>
+
+    <br>
+    <br>
+
+    Want more pizzas:
+    <form action="{% url 'pizzas' %}" method="get">
+        {{ multiple_form }}
+        <input type="submit" value="Get Pizzas">
+    </form>
+</div>
+
+{% endblock %}

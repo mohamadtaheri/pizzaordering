@@ -1,5 +1,9 @@
-<h1>
-Nadia's Garden
-</h1>
-<a href="{% url 'order' %}">Order a pizza</a>
+{% extends 'pizza/base.html' %}
+{% load static %}
+{% block content %}
 
+<div class="text-center">
+    <img src="{% static 'images/home.jpg' %}" class="img-fluid">
+</div>
+
+{% endblock %}

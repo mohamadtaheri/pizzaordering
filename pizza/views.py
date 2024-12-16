@@ -15,22 +15,27 @@ def order(request):
         # field_form = PizzaForm(request.POST, request.FILES)
         field_form = PizzaForm(request.POST)
 
-        if field_form.is_valid():
+        if field_form.is_valid():                
             current_form = field_form.save()
             current_form_pk = current_form.id
             note = f"Thanks for ordering! Your {field_form.cleaned_data['size']} \
             {field_form.cleaned_data['topping1']} and {field_form.cleaned_data['topping2']} pizza is on its way!"
-            new_form = PizzaForm()
-            return render(
-                request,
-                "pizza/order.html",
-                {
-                    "current_form_pk": current_form_pk,
-                    "pizzaform": new_form,
-                    "note": note,
-                    "multiple_form": multiple_form,
-                },
-            )
+            field_form = PizzaForm()
+
+        else:
+            note = "Your order has been failed! please try again"
+            current_form_pk = None
+        return render(
+            request,
+            "pizza/order.html",
+            {
+                "current_form_pk": current_form_pk,
+                "pizzaform": field_form,
+                "note": note,
+                "multiple_form": multiple_form,
+            },
+        )
+
     else:
         form = PizzaForm()
         return render(
@@ -75,7 +80,9 @@ def edit_order(request, pk):
             return render(
                 request,
                 "pizza/edit_order.html",
-                {"pizzaform": pizzaform, "note": note, 'pizza':pizza},
+                {"pizzaform": pizzaform, "note": note, "pizza": pizza},
             )
     else:
-        return render(request, "pizza/edit_order.html", {"pizzaform": pizzaform, 'pizza': pizza})
+        return render(
+            request, "pizza/edit_order.html", {"pizzaform": pizzaform, "pizza": pizza}
+        )
