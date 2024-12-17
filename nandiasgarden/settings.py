@@ -36,10 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'widget_tweaks',
-    'pizza',
-]
+    'django.contrib.staticfiles'
+] + ['widget_tweaks',
+    'pizza',]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
